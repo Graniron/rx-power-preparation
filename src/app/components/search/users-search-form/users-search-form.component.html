@@ -1,0 +1,7 @@
+<div>
+  users-search works!
+  <input type="text" [formControl]="input">  
+    <ul>
+      <li *ngFor="let user of users">{{ user.login }}</li>
+    </ul>
+</div>
