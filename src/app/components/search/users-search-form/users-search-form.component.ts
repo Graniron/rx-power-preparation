@@ -21,7 +21,7 @@ export class UsersSearchFormComponent implements OnInit {
 
   constructor(private usersService: UsersService) { }
 
-  ngOnInit() {
+  ngOnInit() {   
     // OK, that works. But when I see something like this, it reminds me of Promises and nested then calls,    
     // this.input.valueChanges.subscribe(
     //    value => {
@@ -84,11 +84,11 @@ export class UsersSearchFormComponent implements OnInit {
      // observable might throw as it is dependent on the network. And the problem with observables is that an error will completely break the stream:
      // so if one request blows, the whole typeahead will be down…​ We don’t want that, so let’s catch potential errors:   
     this.input.valueChanges
-        .filter(query => query.length >= 3)
+        // .filter(query => query.length >= 3)
         .debounceTime(400)
         .distinctUntilChanged()
         .switchMap(value => this.usersService.getUsers(value).catch(err => Observable.of([])))
-        .subscribe(results => this.users = results.items); 
+        .subscribe(results => this.usersService.shareUsers(results)); 
 
 
     // Quite nice, don’t you think? We now only trigger a search when the user enters a text with more then 3 characters and waits at least 400ms.
@@ -100,3 +100,28 @@ export class UsersSearchFormComponent implements OnInit {
   }
 
 }
+
+
+
+
+// Building your own Observable
+// const numbers = Observable.create(observer => {
+//   observer.next(1);
+//   observer.next(2);
+//   observer.complete();
+// });
+
+
+// numbers.subscribe(
+//   number => console.log(number),
+//   error => console.log(error),
+//   () => console.log('Complete!')
+// );
+// Will log:
+// 1
+// 2
+// Complete!
+
+
+
+// GO TO SERVICE
