@@ -18,6 +18,11 @@ export class UsersService {
             .map(res => res.json());
     }
 
+    getUser(id) {
+        return this.http.get(`${API_URL}/user/${id}`)
+            .map(res => res.json());
+    }
+
     shareUsers(users) {
         // this.users = users;
         this.onUsersUpdate.emit(users);

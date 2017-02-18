@@ -1,9 +1,11 @@
 <div class="list-wrapper panel" [ngClass]="{'panel-success': count, 'panel-warning': !count}">
   <div class="panel-heading">Search results({{count || 0}})</div>
   <div class="panel-body">
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let user of users">{{ user.login }}</li>
-    </ul>
+    <div class="list-group">
+      <a [routerLink]="['user', user.id]" class="list-group-item" *ngFor="let user of users">
+        {{ user.login }}
+      </a>
+    </div>
     <div *ngIf="!count">No results found</div>
   </div>
 </div>
