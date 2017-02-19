@@ -7,21 +7,44 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-
-
-
 @Component({
   selector: 'app-users-search-form',
   templateUrl: './users-search-form.component.html',
   styleUrls: ['./users-search-form.component.css']
 })
 export class UsersSearchFormComponent implements OnInit {
-  private input = new FormControl();
+  private username = new FormControl();
+  private language = new FormControl();
+
+  private searchObj = {
+    username: '',
+    language: '',
+  }
+  
   private users;
 
   constructor(private usersService: UsersService) { }
 
-  ngOnInit() {   
+  ngOnInit() {  
+
+  this.language.valueChanges.merge(this.username.valueChanges)
+        .debounceTime(400)
+        .distinctUntilChanged()
+        .switchMap(value => this.usersService.getUsers(this.searchObj).catch(err => Observable.of([])))
+        .subscribe(results => this.usersService.shareUsers(results));
+
+
+    //  this.language.valueChanges
+    //     // .filter(query => query.length >= 3)
+    //     .debounceTime(400)
+    //     .distinctUntilChanged()
+    //     .switchMap(value => this.usersService.getUsers(this.searchObj).catch(err => Observable.of([])))
+    //     .subscribe(results => this.usersService.shareUsers(results));
+
+
+
+
+
     // OK, that works. But when I see something like this, it reminds me of Promises and nested then calls,    
     // this.input.valueChanges.subscribe(
     //    value => {
@@ -83,12 +106,12 @@ export class UsersSearchFormComponent implements OnInit {
      // Last thing: we need to properly handle the errors. We know that the valueChanges﻿ will not emit any error, but our ponyService.search()﻿ 
      // observable might throw as it is dependent on the network. And the problem with observables is that an error will completely break the stream:
      // so if one request blows, the whole typeahead will be down…​ We don’t want that, so let’s catch potential errors:   
-    this.input.valueChanges
-        // .filter(query => query.length >= 3)
-        .debounceTime(400)
-        .distinctUntilChanged()
-        .switchMap(value => this.usersService.getUsers(value).catch(err => Observable.of([])))
-        .subscribe(results => this.usersService.shareUsers(results)); 
+    // this.username.valueChanges
+    //     // .filter(query => query.length >= 3)
+    //     .debounceTime(400)
+    //     .distinctUntilChanged()
+    //     .switchMap(value => this.usersService.getUsers(this.searchObj).catch(err => Observable.of([])))
+    //     .subscribe(results => this.usersService.shareUsers(results)); 
 
 
     // Quite nice, don’t you think? We now only trigger a search when the user enters a text with more then 3 characters and waits at least 400ms.

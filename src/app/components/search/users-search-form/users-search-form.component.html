@@ -1,3 +1,6 @@
-<div>  
-  <input type="text" [formControl]="input" placeholder="username">  
+<div>
+  <div class="form-group">
+    <input type="text" class="form-control" [formControl]="username" [(ngModel)]="searchObj.username" placeholder="username">
+    <input type="text" class="form-control" [formControl]="language" [(ngModel)]="searchObj.language" placeholder="language">
+  </div>
 </div>

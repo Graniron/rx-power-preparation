@@ -3,7 +3,10 @@
   <div class="panel-body">
     <div class="list-group">
       <a [routerLink]="['user', user.id]" class="list-group-item" *ngFor="let user of users">
-        {{ user.login }}
+        <span class="avatar-wrapper">
+          <img [src]="user.avatar_url" class="img-responsive img-rounded" width="35" height="35" alt="avatar">
+        </span>
+        <span class="login-wrapper">{{ user.login }}</span>
       </a>
     </div>
     <div *ngIf="!count">No results found</div>

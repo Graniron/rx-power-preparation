@@ -13,8 +13,22 @@ export class UsersService {
     
     constructor(private http: Http) {}
 
-    getUsers(query) {
-        return this.http.get(`${API_URL}/search/users?q=${query}`)
+    // grani+in%3Alogin+language%3Aruby
+
+    getUsers(searchObj) {
+        let q = 'q='
+        if (searchObj.username) {
+            q += `${searchObj.username}+in%3Alogin`;
+        }
+        if (searchObj.language) {
+            q +=  `+language%3A${searchObj.language}`;
+        }
+        if(!searchObj.language && !searchObj.username) {
+           q += '*===emtpy===*';     
+        }
+        
+
+        return this.http.get(`${API_URL}/search/users?${q}`)
             .map(res => res.json());
     }
 

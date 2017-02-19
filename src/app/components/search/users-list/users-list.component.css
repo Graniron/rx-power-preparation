@@ -6,3 +6,9 @@
 ul {
     list-style: none;
 }
+
+.list-group-item {
+    display: flex;
+    align-items: center;
+}
+
