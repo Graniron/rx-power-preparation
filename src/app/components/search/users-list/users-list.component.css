@@ -6,3 +6,16 @@
 ul {
     list-style: none;
 }
+
+ul li {
+    max-height: 38px;
+    overflow: hidden;
+    -webkit-transition: max-height 0.8s;
+    transition: max-height 0.8s;
+}
+
+li.list-group-item.showContent {
+   max-height: 60px;
+    -webkit-transition: max-height 0.8s;
+   transition: max-height 0.8s;
+}

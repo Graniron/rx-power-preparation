@@ -2,7 +2,11 @@
   <div class="panel-heading">Search results({{count || 0}})</div>
   <div class="panel-body">
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let user of users">{{ user.login }}</li>
+      <li class="list-group-item" (mousedown)="onMouseDown($event)" *ngFor="let user of users">
+        <p>{{ user.login }}</p>
+        <p>Additional info</p>
+
+        </li>
     </ul>
     <div *ngIf="!count">No results found</div>
   </div>
