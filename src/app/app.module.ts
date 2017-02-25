@@ -9,6 +9,7 @@ import { ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { UsersService } from './services/users.service';
+import { DragAndDropDirective } from './dirrectives/drag-and-drop.directive';
 
 import {
          SearchComponent,
@@ -24,7 +25,8 @@ import {
     UsersListComponent,
     UsersSearchFormComponent,
     UserProfileComponent,
-    SearchComponent
+    SearchComponent,
+    DragAndDropDirective
   ],
   imports: [
     BrowserModule,

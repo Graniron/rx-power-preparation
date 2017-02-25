@@ -2,11 +2,20 @@
   <div class="panel-heading">Search results({{count || 0}})</div>
   <div class="panel-body">
     <div class="list-group">
-      <a [routerLink]="['user', user.id]" class="list-group-item" *ngFor="let user of users">
-        <span class="avatar-wrapper">
-          <img [src]="user.avatar_url" class="img-responsive img-rounded" width="35" height="35" alt="avatar">
-        </span>
-        <span class="login-wrapper">{{ user.login }}</span>
+      
+      <a appDragAndDrop class="list-group-item" *ngFor="let user of users">
+        <p>
+          <span class="avatar-wrapper">
+            <img draggable="false" [src]="user.avatar_url" class="img-responsive img-rounded" width="35" height="35" alt="avatar">
+          </span>
+          <span class="login-wrapper">
+            <span>{{ user.login }}</span>
+            <a [routerLink]="['user', user.id]">
+              <i class="fa fa-link" aria-hidden="true"></i>
+            </a>
+          </span>
+        </p>
+        <p>Additional info</p>
       </a>
     </div>
     <div *ngIf="!count">No results found</div>
