@@ -11,6 +11,7 @@ import { UsersService } from './../../../services/users.service';
 export class UsersListComponent implements OnInit {
   private users;
   private count: number = 0;
+  
 
   constructor(private usersService: UsersService) { }
 
@@ -19,8 +20,17 @@ export class UsersListComponent implements OnInit {
       (results) => {
         this.count = results.total_count;
         this.users = results.items;
+
+        this.users.map((user) => {
+           user.orgs = this.getOrgs(user.login);
+        });
+        console.log(this.users);
       }
     )
+  }
+
+  getOrgs(username) {
+    return this.usersService.getOrganisations(username);
   }
 
 }

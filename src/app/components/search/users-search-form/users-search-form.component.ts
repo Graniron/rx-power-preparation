@@ -28,7 +28,7 @@ export class UsersSearchFormComponent implements OnInit {
   ngOnInit() {  
 
   this.language.valueChanges.merge(this.username.valueChanges)
-        .debounceTime(400)
+        .debounceTime(1000)
         .distinctUntilChanged()
         .switchMap(value => this.usersService.getUsers(this.searchObj).catch(err => Observable.of([])))
         .subscribe(results => this.usersService.shareUsers(results));

@@ -26,7 +26,6 @@ export class UsersService {
         if(!searchObj.language && !searchObj.username) {
            q += '*===emtpy===*';     
         }
-        
 
         return this.http.get(`${API_URL}/search/users?${q}`)
             .map(res => res.json());
@@ -45,6 +44,12 @@ export class UsersService {
     // getStoredUsers(users) {
     //     return this.users;
     // }
+
+    getOrganisations(username) {
+        return this.http.get(`${API_URL}/users/${username}/orgs`)            
+            .map(res => res.json());
+    }
+
 
 
 }

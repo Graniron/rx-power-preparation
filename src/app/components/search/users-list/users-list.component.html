@@ -16,7 +16,9 @@
           </span>
         </p>
         <p>Additional info</p>
+        <p>{{user.orgs | async}}</p>
       </a>
+
     </div>
     <div *ngIf="!count">No results found</div>
   </div>

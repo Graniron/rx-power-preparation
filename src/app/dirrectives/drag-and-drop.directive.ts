@@ -16,8 +16,6 @@ export class DragAndDropDirective implements OnInit {
             } else if (!this.element.classList.contains('showContent')) {
                 this.element.className += ' showContent';
             }
-            console.log('Mouse Up', this.el);
-            console.log('Parent');            
         });
 
     private mouseDown = Observable.fromEvent<MouseEvent>(this.element, 'mousedown');
@@ -32,7 +30,7 @@ export class DragAndDropDirective implements OnInit {
         let offsetX: number;
 
         this.mouseDown
-            .flatMap((mouse) => {
+            .switchMap((mouse) => {
                 offsetX = mouse.offsetX;
                 offsetY = mouse.offsetY;
                 return this.mouseMove.takeUntil(this.mouseUp);
@@ -46,10 +44,6 @@ export class DragAndDropDirective implements OnInit {
             .subscribe(
                 m => {
                     console.log('mousemove');
-                },
-                err => console.log(err),
-                () => {
-                    console.log('done');
                 }
             );
     }
