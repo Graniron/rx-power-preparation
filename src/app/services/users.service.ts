@@ -44,14 +44,6 @@ export class UsersService {
     // getStoredUsers(users) {
     //     return this.users;
     // }
-
-    getOrganisations(username) {
-        return this.http.get(`${API_URL}/users/${username}/orgs`)            
-            .map(res => res.json());
-    }
-
-
-
 }
 
 

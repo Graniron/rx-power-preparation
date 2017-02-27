@@ -10,14 +10,13 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { UsersService } from './services/users.service';
 import { DragAndDropDirective } from './dirrectives/drag-and-drop.directive';
+import { AppMouseTransformDirective } from './dirrectives/mouse-transform.directive';
 
 import {
          SearchComponent,
          UsersListComponent,
          UsersSearchFormComponent,
          UserProfileComponent } from './components';
-
-
 
 @NgModule({
   declarations: [
@@ -26,7 +25,8 @@ import {
     UsersSearchFormComponent,
     UserProfileComponent,
     SearchComponent,
-    DragAndDropDirective
+    DragAndDropDirective,
+    AppMouseTransformDirective
   ],
   imports: [
     BrowserModule,

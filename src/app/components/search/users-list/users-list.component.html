@@ -10,10 +10,10 @@
           </span>
           <span class="login-wrapper">
             <span>{{ user.login }}</span>
-            <a [routerLink]="['user', user.id]">
+          </span>
+           <a [routerLink]="['user', user.id]">
               <i class="fa fa-link" aria-hidden="true"></i>
             </a>
-          </span>
         </p>
         <p>Additional info</p>
         <p>{{user.orgs | async}}</p>
