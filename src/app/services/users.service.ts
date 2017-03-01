@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -9,14 +9,16 @@ const API_URL = 'https://api.github.com';
 @Injectable()
 export class UsersService {
     private users;
-    public onUsersUpdate: EventEmitter<any> = new EventEmitter();
+    // public onUsersUpdate: EventEmitter<any> = new EventEmitter();
+    public onUsersUpdate$ = new Subject();
     
     constructor(private http: Http) {}
 
     // grani+in%3Alogin+language%3Aruby
 
+    // Fetch users by query from github
     getUsers(searchObj) {
-        let q = 'q='
+        let q = 'q=';
         if (searchObj.username) {
             q += `${searchObj.username}+in%3Alogin`;
         }
@@ -24,34 +26,27 @@ export class UsersService {
             q +=  `+language%3A${searchObj.language}`;
         }
         if(!searchObj.language && !searchObj.username) {
-           q += '*===emtpy===*';     
+           q += '*===emtpy===*';
         }
 
         return this.http.get(`${API_URL}/search/users?${q}`)
             .map(res => res.json());
     }
 
+    // Fetch user data from github by id
     getUser(id) {
         return this.http.get(`${API_URL}/user/${id}`)
             .map(res => res.json());
     }
 
     shareUsers(users) {
-        // this.users = users;
-        this.onUsersUpdate.emit(users);
+        this.onUsersUpdate$.next(users);
     }
-
-    // getStoredUsers(users) {
-    //     return this.users;
-    // }
 }
 
 
 
-
-
-
-
+//=>> Presentational comments <==//
 
   // Now, let’s say I want to emit 'hello' every 2 seconds, and never complete.
 // We could easily do this with some built-in operators, but we can try by hand, as a small example:

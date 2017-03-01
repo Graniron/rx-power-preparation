@@ -1,4 +1,3 @@
-// import { SearchService } from './search/search.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,8 +8,8 @@ import { ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { UsersService } from './services/users.service';
-import { DragAndDropDirective } from './dirrectives/drag-and-drop.directive';
-import { AppMouseTransformDirective } from './dirrectives/mouse-transform.directive';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { AppMouseTransformDirective } from './directives/mouse-transform.directive';
 
 import {
          SearchComponent,

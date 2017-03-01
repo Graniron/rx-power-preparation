@@ -19,6 +19,7 @@ export class UserProfileComponent implements OnInit {
               private usersService: UsersService) { }
 
   ngOnInit() {
+    // Get route params to fetch user data
     this.activatedRoute.params.subscribe(
       (params) => {
         this.userId = params['id'];
@@ -27,13 +28,14 @@ export class UserProfileComponent implements OnInit {
     )
   }
 
+  // Fetch user data by Id
   getUserInfo() {
     this.usersService.getUser(this.userId).subscribe(
       (user) => {
         this.user = user;
       },
       (err) => console.error('Error: ', err)
-    )
+    );
   }
 
 }

@@ -2,8 +2,8 @@ import { Observable } from 'rxjs/Rx';
 import { UsersService } from './../../../services/users.service';
 import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import 'rxjs/add/operator/concatMap';
-import 'rxjs/add/operator/filter';
+// import 'rxjs/add/operator/concatMap';
+// import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
@@ -19,20 +19,26 @@ export class UsersSearchFormComponent implements OnInit {
   private searchObj = {
     username: '',
     language: '',
-  }
-  
-  private users;
+  };
 
   constructor(private usersService: UsersService) { }
 
-  ngOnInit() {  
-
+  ngOnInit() {
   this.language.valueChanges.merge(this.username.valueChanges)
         .debounceTime(1000)
         .distinctUntilChanged()
         .switchMap(value => this.usersService.getUsers(this.searchObj).catch(err => Observable.of([])))
         .subscribe(results => this.usersService.shareUsers(results));
+  }
+}
 
+
+
+
+
+
+
+//=>> Comments for presentation <<=//
 
     //  this.language.valueChanges
     //     // .filter(query => query.length >= 3)
@@ -40,10 +46,7 @@ export class UsersSearchFormComponent implements OnInit {
     //     .distinctUntilChanged()
     //     .switchMap(value => this.usersService.getUsers(this.searchObj).catch(err => Observable.of([])))
     //     .subscribe(results => this.usersService.shareUsers(results));
-
-
-
-
+    
 
     // OK, that works. But when I see something like this, it reminds me of Promises and nested then calls,    
     // this.input.valueChanges.subscribe(
@@ -57,7 +60,6 @@ export class UsersSearchFormComponent implements OnInit {
     // )
 
 
-
     // that can be flattened. And indeed you can do the same with Observables, with the concatMap﻿ operator for example:
     // this.input.valueChanges
     //   .concatMap(value => this.usersService.getUsers(value))
@@ -65,15 +67,18 @@ export class UsersSearchFormComponent implements OnInit {
     // concatMap "flattens" our code. It replaces every event emitted by the source observable (i.e. the entered user name) 
     // by the events emitted by the observable of fetched users 
 
+
     // As our search﻿ method performs an HTTP request per search, we can run into some troubles if a request is too slow. Our user might query n﻿ then ni﻿,
     // but the result might come back really slowly for n﻿, and fast for ni﻿. That means our code above will display the second results only after the first displayed,
     // even if we don’t care about the first ones anymore! This could be tracked by hand, but that would be really cumbersome.
+
 
     //Unlike concatMap﻿, switchMap﻿ will only care about the last value emitted, and will discard the earlier values,
     // so we’re sure that the results corresponding to an old input won’t be displayed.
     // this.input.valueChanges
     //   .switchMap(value => this.usersService.getUsers(value))
     //   .subscribe(results => this.users = results.items);
+
 
     // OK, now let’s discard the queries that are less than three characters. Easy: we just have to use a filter﻿ operator!
       // this.input.valueChanges
@@ -120,12 +125,6 @@ export class UsersSearchFormComponent implements OnInit {
     // This is of course a really good use-case for RxJS, but the point is that it provides a lot of operators, with some gems hidden in it.
     // It takes time to understand it, but it’s worth the trouble as it can be tremendously useful in your application.    
 
-  }
-
-}
-
-
-
 
 // Building your own Observable
 // const numbers = Observable.create(observer => {
@@ -144,7 +143,6 @@ export class UsersSearchFormComponent implements OnInit {
 // 1
 // 2
 // Complete!
-
 
 
 // GO TO SERVICE
