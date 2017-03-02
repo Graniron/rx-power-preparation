@@ -28,7 +28,7 @@ export class UsersSearchFormComponent implements OnInit {
         .debounceTime(1000)
         .distinctUntilChanged()
         .switchMap(value => this.usersService.getUsers(this.searchObj).catch(err => Observable.of([])))
-        .subscribe(results => this.usersService.shareUsers(results));
+        .subscribe((results) => this.usersService.shareUsers(results));
   }
 }
 

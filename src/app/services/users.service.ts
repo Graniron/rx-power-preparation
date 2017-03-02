@@ -3,7 +3,6 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-
 const API_URL = 'https://api.github.com';
 
 @Injectable()

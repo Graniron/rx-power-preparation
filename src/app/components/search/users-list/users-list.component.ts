@@ -16,7 +16,7 @@ export class UsersListComponent implements OnInit {
   ngOnInit() {
     // Subscribe to Users Observable to listen for changes
     this.usersService.onUsersUpdate$.subscribe(
-      (results) => {
+      (results: any) => {
         this.count = results.total_count;
         this.users = results.items;
       }
