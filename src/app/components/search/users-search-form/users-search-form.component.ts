@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { UsersService } from './../../../services/users.service';
 import { FormControl } from '@angular/forms';
@@ -21,22 +22,36 @@ export class UsersSearchFormComponent implements OnInit {
     language: '',
   };
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService, 
+              private activatedRoute: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
-  this.language.valueChanges.merge(this.username.valueChanges)
+    this.language.valueChanges.merge(this.username.valueChanges)
         .debounceTime(1000)
         .distinctUntilChanged()
-        .switchMap(value => this.usersService.getUsers(this.searchObj).catch(err => Observable.of([])))
-        .subscribe((results) => this.usersService.shareUsers(results));
+        .subscribe(
+          () => {
+            this.router.navigate([], {
+              queryParams: this.searchObj,
+              relativeTo: this.activatedRoute
+            });
+          }
+        );
+        // .switchMap(value => this.usersService.getUsers(this.searchObj).catch(err => Observable.of([])))
+        // .subscribe((results) => this.usersService.shareUsers(results));
+
+    this.activatedRoute.queryParams.subscribe(
+      (params) => {
+        this.searchObj.username = params['username'] || '';
+        this.searchObj.language = params['language'] || '';
+
+        return this.usersService.getUsers(this.searchObj).catch(err => Observable.of([]))
+                  .subscribe((results) => this.usersService.shareUsers(results));  
+      }
+    )
   }
 }
-
-
-
-
-
-
 
 //=>> Comments for presentation <<=//
 
