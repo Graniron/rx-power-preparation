@@ -27,31 +27,38 @@ export class UsersSearchFormComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    // Monitor input value changes
     this.language.valueChanges.merge(this.username.valueChanges)
         .debounceTime(1000)
         .distinctUntilChanged()
         .subscribe(
           () => {
+            // set query params for current route
             this.router.navigate([], {
               queryParams: this.searchObj,
               relativeTo: this.activatedRoute
             });
           }
         );
-        // .switchMap(value => this.usersService.getUsers(this.searchObj).catch(err => Observable.of([])))
-        // .subscribe((results) => this.usersService.shareUsers(results));
 
+    // Listen for query params
     this.activatedRoute.queryParams.subscribe(
       (params) => {
         this.searchObj.username = params['username'] || '';
         this.searchObj.language = params['language'] || '';
-
-        return this.usersService.getUsers(this.searchObj).catch(err => Observable.of([]))
-                  .subscribe((results) => this.usersService.shareUsers(results));  
+        // Fetch users
+        this.usersService.getUsers(this.searchObj)
+          .catch(err => Observable.of([]))
+          .subscribe((results) => this.usersService.shareUsers(results));
       }
     )
   }
 }
+
+
+
+
+
 
 //=>> Comments for presentation <<=//
 

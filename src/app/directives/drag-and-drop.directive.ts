@@ -7,7 +7,7 @@ export class DragAndDropDirective implements OnInit {
     private deviations = 30;
     private mouseDown = Observable.fromEvent<MouseEvent>(this.element, 'mousedown');
     private mouseMove = Observable.fromEvent<MouseEvent>(document, 'mousemove');
-    private mouseUp = Observable.fromEvent<MouseEvent>(this.element, 'mouseup')
+    private mouseUp = Observable.fromEvent<MouseEvent>(document, 'mouseup')
         .map((e) => {
             if (this.element.offsetLeft > this.element.parentElement.offsetLeft - this.deviations &&
                 (this.element.offsetLeft + this.element.offsetWidth) <
